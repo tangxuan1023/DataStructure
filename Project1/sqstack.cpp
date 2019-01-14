@@ -42,11 +42,11 @@ int Push(SqStack *pS, SElemType value)
 	return 0;
 }
 
-int Pop(SqStack *pS, SElemType *pValue)
+int Pop(SqStack *pS/*, SElemType *pValue*/)
 {
 	//if (pS->base == pS->top) return -1;
 	if (isStackEmpty(*pS)) return -1;
-	*pValue = * --pS->top;
+	/**pValue = * */--pS->top;
 	return 0;
 }
 

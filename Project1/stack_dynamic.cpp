@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdlib.h>
-
 #include "stack.h"
 
+#ifdef _DYNAMIC_STACK_
 /* implement */
 static STACK_TYPE *stack;
 static size_t stack_size;
@@ -26,31 +26,32 @@ void destroy_stack(void)
 
 void push(STACK_TYPE value)
 {
-	assert(!is_full());
+	assert(!is_stack_full());
 	top_element += 1;
 	stack[top_element] = value;
 }
 
 void pop(void)
 {
-	assert(!is_empty());
+	assert(!is_stack_empty());
 	top_element -= 1;
 }
 
 STACK_TYPE top(void)
 {
-	assert(!is_empty());
+	assert(!is_stack_empty());
 	return stack[top_element];
 }
 
-int is_empty(void)
+int is_stack_empty(void)
 {
 	assert(stack_size > 0);
 	return top_element == -1;
 }
 
-int is_full(void)
+int is_stack_full(void)
 {
 	assert(stack_size > 0);
 	return top_element == stack_size - 1;
 }
+#endif

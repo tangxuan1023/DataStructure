@@ -38,11 +38,11 @@ void tests()
 	Push(&S, 14);
 	Push(&S, 15);
 	printf("len= %d\n", StackLength(S));
-	Pop(&S, &value);
+	Pop(&S);
 	printf("len= %d\n", StackLength(S));
-	Pop(&S, &value);
-	Pop(&S, &value);
-	printf("pop= %d\n", Pop(&S, &value));
+	Pop(&S);
+	Pop(&S);
+	printf("pop= %d\n", Pop(&S));
 	printf("len= %d\n", StackLength(S));
 }
 
@@ -94,7 +94,7 @@ void mirrorOfBiTree(BiTree T)
 	T->rchild = tmp;
 }
 
-void testt()
+void test_tree1()
 {
 	/*BiTree tree = CreateNewNode('4');
 	BiTree pl, pr;
@@ -116,34 +116,28 @@ void testt()
 	printf("\nmaxDepth = %u\n", maxBiTreeDepth(tree));
 }
 
-struct _mytest {
-	int a;
-	int b;
-	int c;
-};
-
+int test_tree()
+{
+    /* Constructed binary tree is
+        10
+       /   \
+      8	     2
+     / \    /
+    3   5  2
+    */
+    BiTNode*root = CreateNewNode(10);
+    root->lchild = CreateNewNode(8);
+    root->rchild = CreateNewNode(2);
+    root->lchild->lchild = CreateNewNode(3);
+    root->lchild->rchild = CreateNewNode(5);
+    root->rchild->lchild = CreateNewNode(2);
+    PreOrderIterative(root);
+    return 0;
+}
 
 int main()
 {
-	/*int x = 10;
-	printf("+");
-	for (int i = 0; i < x; i++)
-		printf("-");
-	printf("+");
-	printf("\n");
-	printf("|");
-	for (int i = 0; i < 1; i++)
-		printf(" ");
-	printf("test now");
-	for (int i = 0; i < 1; i++)
-		printf(" ");
-	printf("|");
-	printf("\n");
-	printf("+");
-	for (int i = 0; i < x; i++)
-		printf("-");
-	printf("+");
-	printf("\n");*/
+    test_tree();
 	getchar();
 	return 0;
 }

@@ -126,7 +126,7 @@ int destory(struct Node *p_root)
 	return 0;
 }
 
-int main_1()
+int main_sll()
 {
 	int ret = -1;
 	create();

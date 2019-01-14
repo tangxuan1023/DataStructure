@@ -7,7 +7,7 @@ typedef struct BiTNode {
 	struct BiTNode *lchild, *rchild;
 }BiTNode, *BiTree;
 
-BiTree CreateNewNode(TElemType value);
+BiTNode* CreateNewNode(TElemType value);
 BiTree CreateBiTree();
 void InitBiTree(BiTree &T);
 void DestroyBiTree(BiTree &T);
@@ -33,4 +33,5 @@ bool InOrderTraverse(BiTree T, Visit visit, void *pUserData);
 bool PostOrderTraverse(BiTree T, Visit visit, void *pUserData);
 bool LevelOrderTraverse(BiTree T, Visit visit, void *pUserData);
 
+void PreOrderIterative(BiTree root);
 #endif

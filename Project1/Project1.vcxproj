@@ -111,9 +111,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dll.cpp" />
+    <ClCompile Include="linkqueue.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="queue_dynamic.cpp" />
+    <ClCompile Include="queue_link.cpp" />
+    <ClCompile Include="queue_static.cpp" />
+    <ClCompile Include="sqstack.cpp" />
+    <ClCompile Include="stack_dynamic.cpp" />
+    <ClCompile Include="stack_link.cpp" />
+    <ClCompile Include="stack_static.cpp" />
     <ClCompile Include="test_dll.cpp" />
     <ClCompile Include="test_sll.cpp" />
     <ClCompile Include="sll.cpp" />
+    <ClCompile Include="tree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="linkqueue.h" />
+    <ClInclude Include="queue.h" />
+    <ClInclude Include="sqstack.h" />
+    <ClInclude Include="stack.h" />
+    <ClInclude Include="tree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

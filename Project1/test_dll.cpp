@@ -167,7 +167,7 @@ int dll_print(struct DNode *p_root, int dest)
 	return 0;
 }
 
-int main()
+int main_dll()
 {
 	int ret = -1;
 	dll_create();

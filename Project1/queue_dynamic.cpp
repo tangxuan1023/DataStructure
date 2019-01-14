@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
-
 #include "queue.h"
+#ifdef _DYNAMIC_QUEUE_
 
 static size_t queue_size;
 static size_t array_size;
@@ -29,29 +29,31 @@ void destroy_queue(void)
 
 void insert(QUEUE_TYPE value)
 {
-	assert(!is_full());
+	assert(!is_queue_full());
 	rear = (rear + 1) % array_size;
 	queue[rear] = value;
 }
 
 void delete_(void)
 {
-	assert(!is_empty());
+	assert(!is_queue_empty());
 	front = (front + 1) % array_size;
 }
 
 QUEUE_TYPE first(void)
 {
-	assert(!is_empty());
+	assert(!is_queue_empty());
 	return queue[front];
 }
 
-int is_empty(void)
+int is_queue_empty(void)
 {
 	return (rear + 1) % array_size == front;
 }
 
-int is_full(void)
+int is_queue_full(void)
 {
 	return (rear + 2) % array_size == front;
 }
+
+#endif

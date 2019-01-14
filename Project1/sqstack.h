@@ -17,7 +17,7 @@ int InitStack(SqStack *pS);
 
 int GetTop(SqStack S, SElemType *top);
 int Push(SqStack *pS, SElemType value);
-int Pop(SqStack *pS, SElemType *pValue);
+int Pop(SqStack *pS/*, SElemType *pValue*/);
 bool isStackEmpty(SqStack S);
 int DestroyStack(SqStack *pS);
 size_t StackLength(SqStack S);

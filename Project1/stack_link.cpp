@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdlib.h>
-
 #include "stack.h"
 
+#ifdef _LINK_STACK_
 #define FALSE 0
 
 typedef struct STACK_NODE {
@@ -19,7 +19,7 @@ void create_stack(size_t size)
 
 void destroy_stack(void)
 {
-	while (!is_empty()) {
+	while (!is_stack_empty()) {
 		pop();
 	}
 }
@@ -39,7 +39,7 @@ void pop(void)
 {
 	StackNode *first_node;
 
-	assert(!is_empty());
+	assert(!is_stack_empty());
 	first_node = stack;
 	stack = first_node->next;
 	free(first_node);
@@ -47,16 +47,17 @@ void pop(void)
 
 STACK_TYPE top(void)
 {
-	assert(!is_empty());
+	assert(!is_stack_empty());
 	return stack->value;
 }
 
-int is_empty(void)
+int is_stack_empty(void)
 {
 	return stack == NULL;
 }
 
-int is_full(void)
+int is_stack_full(void)
 {
 	return FALSE;  //link storage structure has not full
 }
+#endif

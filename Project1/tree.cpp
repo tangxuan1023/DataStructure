@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #pragma warning(disable:4996)
 
-BiTree CreateNewNode(TElemType value)
+BiTNode* CreateNewNode(TElemType value)
 {
-	BiTree treePtr = (BiTree)malloc(sizeof(BiTNode));
+    BiTNode* treePtr = (BiTNode*)malloc(sizeof(BiTNode));
 	if (!treePtr) return NULL;
 	treePtr->value = value;
 	treePtr->lchild = NULL;
@@ -88,4 +88,41 @@ bool PostOrderTraverse(BiTree T, Visit visit, void *pUserData)
 bool LevelOrderTraverse(BiTree T, Visit visit, void *pUserData)
 {
 	return true;
+}
+
+#include <stdlib.h> 
+#include <stdio.h> 
+#include <iostream> 
+#include <stack> 
+
+using namespace std;
+// An iterative process to print preorder traversal of Binary tree 
+void PreOrderIterative(BiTree root)
+{
+    // Base Case 
+    if (root == NULL)
+        return;
+
+    // Create an empty stack and push root to it 
+    std::stack<BiTree> nodeStack;
+    nodeStack.push(root);
+
+    /* Pop all items one by one. Do following for every popped item
+    a) print it
+    b) push its right child
+    c) push its left child
+    Note that right child is pushed first so that left is processed first */
+    while (nodeStack.empty() == false)
+    {
+        // Pop the top item from stack and print it 
+        BiTNode *node = nodeStack.top();
+        printf("%d ", node->value);  // output, it's can use callback to improve
+        nodeStack.pop();
+
+        // Push right and left children of the popped node to stack 
+        if (node->rchild)
+            nodeStack.push(node->rchild);
+        if (node->lchild)
+            nodeStack.push(node->lchild);
+    }
 }
