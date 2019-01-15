@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define STACK_INIT_SIZE 100
+#define STACK_INCREMENT 10
+
 int InitStack(SqStack *pS)
 {
 	pS->base = (SElemType*)malloc(STACK_INIT_SIZE * sizeof(SElemType));

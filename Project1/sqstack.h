@@ -1,11 +1,14 @@
 #ifndef __STACK_H__
 #define __STACK_H__
 
-#define STACK_INIT_SIZE 100
-#define STACK_INCREMENT 10
+#define TREE_USED_STACK
 
+#ifdef TREE_USED_STACK
+struct BiTNode;
+typedef BiTNode* SElemType;
+#else
 typedef int SElemType;
-
+#endif
 typedef struct SqStack {
 	SElemType *base;
 	SElemType *top;

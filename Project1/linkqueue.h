@@ -1,6 +1,9 @@
 #ifndef __LINK_QUEUE_H__
 #define __LINK_QUEUE_H__
 #include <stdlib.h>
+
+//#define TREE_USED_QUEUE
+
 typedef int QElemType;
 
 typedef struct QNode {

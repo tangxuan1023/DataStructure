@@ -27,11 +27,21 @@ BiTNode getNodeRightChild(BiTree T, BiTNode node);
 void InsertTreeChild(BiTree T, BiTNode *pNode, int LR, BiTree newTree);
 void DeleteTreeChild(BiTree T, BiTNode *pNode, int LR);
 
-typedef int(*Visit)(TElemType value);
+typedef int(*Visit)(BiTNode *node);
 bool PreOrderTraverse(BiTree T, Visit visit, void *pUserData);
 bool InOrderTraverse(BiTree T, Visit visit, void *pUserData);
 bool PostOrderTraverse(BiTree T, Visit visit, void *pUserData);
 bool LevelOrderTraverse(BiTree T, Visit visit, void *pUserData);
 
+#define USE_MY_STACK 1
+#define USE_MY_QUEUE 1
+
+#if !USE_MY_STACK
 void PreOrderIterative(BiTree root);
+void PostOrderIterative(BiTree root);
+#else
+struct SqStack;
+void PreOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
+void PostOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
+#endif
 #endif

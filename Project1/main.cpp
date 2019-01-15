@@ -9,6 +9,7 @@
 
 void testq()
 {
+#ifndef TREE_USED_QUEUE
 	LinkQueue Q;
 	InitQueue(&Q);
 	QElemType p = 0;
@@ -25,10 +26,12 @@ void testq()
 	printf("p = %d\n", p);
 	printf("len = %d\n", QueueLength(Q));
 	DestroyQueue(&Q);
+#endif
 }
 
 void tests()
 {
+#ifndef TREE_USED_STACK
 	SqStack S;
 	InitStack(&S);
 	SElemType value = 0;
@@ -44,13 +47,21 @@ void tests()
 	Pop(&S);
 	printf("pop= %d\n", Pop(&S));
 	printf("len= %d\n", StackLength(S));
+#endif
 }
 
 
-int PrintElement(char e)
+int PrintElement(BiTNode* node)
 {
-	printf(" %c ", e);
+	printf(" %d ", node->value);
 	return true;
+}
+
+int release(BiTNode *node)
+{
+    free(node);
+    node = NULL;
+    return 0;
 }
 
 BiTree insert(BiTree T, int value)
@@ -131,7 +142,22 @@ int test_tree()
     root->lchild->lchild = CreateNewNode(3);
     root->lchild->rchild = CreateNewNode(5);
     root->rchild->lchild = CreateNewNode(2);
+#if !USE_MY_STACK
     PreOrderIterative(root);
+    printf("\n");
+    PostOrderIterative(root);
+    // should release node space use function PostOrderIterative
+    // reference below
+#else
+    SqStack nodeStack;
+    int res = InitStack(&nodeStack);
+    PreOrderIterative(root, &nodeStack, &PrintElement);
+    printf("\n");
+    PostOrderIterative(root, &nodeStack, &PrintElement);
+    //release node
+    PostOrderIterative(root, &nodeStack, &release);
+    res = DestroyStack(&nodeStack);
+#endif
     return 0;
 }
 
