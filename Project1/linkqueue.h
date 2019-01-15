@@ -2,16 +2,21 @@
 #define __LINK_QUEUE_H__
 #include <stdlib.h>
 
-//#define TREE_USED_QUEUE
+#define TREE_USED_QUEUE
 
+#ifdef TREE_USED_QUEUE
+struct BiTNode;
+typedef BiTNode* QElemType;
+#else
 typedef int QElemType;
+#endif
 
 typedef struct QNode {
 	QElemType data;
 	struct QNode *next;
 }QNode, *QueuePtr;
 
-typedef struct {
+typedef struct LinkQueue {
 	QueuePtr front;
 	QueuePtr rear;
 }LinkQueue;

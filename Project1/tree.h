@@ -38,10 +38,15 @@ bool LevelOrderTraverse(BiTree T, Visit visit, void *pUserData);
 
 #if !USE_MY_STACK
 void PreOrderIterative(BiTree root);
+void InOrderIterative(BiTree root);
 void PostOrderIterative(BiTree root);
+void LevelOrderIterative(BiTree root);
 #else
 struct SqStack;
+struct LinkQueue;
 void PreOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
+void InOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
 void PostOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
+void LevelOrderIterative(BiTNode *root, LinkQueue *nodeQueue, Visit visit);
 #endif
 #endif

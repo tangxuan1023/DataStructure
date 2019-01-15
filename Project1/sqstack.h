@@ -9,6 +9,7 @@ typedef BiTNode* SElemType;
 #else
 typedef int SElemType;
 #endif
+
 typedef struct SqStack {
 	SElemType *base;
 	SElemType *top;

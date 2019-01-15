@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sqstack.h"
+#include "linkqueue.h"
 #pragma warning(disable:4996)
 
 BiTNode* CreateNewNode(TElemType value)
@@ -86,12 +87,55 @@ bool PostOrderTraverse(BiTree T, Visit visit, void *pUserData)
 
 
 // ≤„–Ú
+void visitGivenLevel(BiTree T, int level, Visit visit);
+int height(BiTree T);
+
 bool LevelOrderTraverse(BiTree T, Visit visit, void *pUserData)
 {
-    // TODO: finish it
+    // TODO: finish it, using linkqueue.h/linkqueue.cpp
+    int h = height(T);
+    int i;
+    for (i = 1; i <= h; i++)
+        visitGivenLevel(T, i, visit);
 	return true;
 }
 
+/* Print nodes at a given level */
+void visitGivenLevel(BiTree T, int level, Visit visit)
+{
+    if (T == NULL)
+        return;
+    if (level == 1)
+        visit(T);
+    else if (level > 1)
+    {
+        visitGivenLevel(T->lchild, level - 1, visit);
+        visitGivenLevel(T->rchild, level - 1, visit);
+    }
+}
+
+/* Compute the "height" of a tree -- the number of
+nodes along the longest path from the root node
+down to the farthest leaf node.*/
+int height(BiTree T)
+{
+    if (T == NULL)
+        return 0;
+    else
+    {
+        /* compute the height of each subtree */
+        int lheight = height(T->lchild);
+        int rheight = height(T->rchild);
+
+        /* use the larger one */
+        if (lheight > rheight)
+            return(lheight + 1);
+        else return(rheight + 1);
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////
 // ∑«µ›πÈ
 #if !USE_MY_STACK
 #include <stdlib.h> 
@@ -151,10 +195,35 @@ void PostOrderIterative(BiTree root)
 
     while (tmpStack.empty() == false) {
         BiTNode *node = tmpStack.top();
-        printf("%d ", node->value);
+        printf("%d ", node->value); // output, it's can use callback to improve
         tmpStack.pop();
     }
 }
+
+void InOrderIterative(BiTree root)
+{
+    std::stack<BiTree> nodeStack;
+    BiTNode *curr = root;
+
+    while(curr != NULL || nodeStack.empty() == false){
+        while (curr != NULL) {
+            nodeStack.push(curr);
+            curr = curr->lchild;
+        }
+
+        curr = nodeStack.top();
+        nodeStack.pop();
+        printf("%d ", curr->value); // output, it's can use callback to improve
+        curr = curr->rchild;
+
+    } /* end of while */
+}
+
+void LevelOrderIterative(BiTree root)
+{
+
+}
+
 #else
 
 void PostOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
@@ -194,5 +263,37 @@ void PreOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
         if (node->rchild) Push(nodeStack, node->rchild);
         if (node->lchild) Push(nodeStack, node->lchild);
     }
+}
+
+void InOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
+{
+    BiTNode *node = root;
+    while (node != NULL || !isStackEmpty(*nodeStack)){
+        /* Reach the left most Node of the curr Node */
+        while (node != NULL){
+            /* place pointer to a tree node on the stack before traversing
+               the node's left subtree */
+            Push(nodeStack, node);
+            node = node->lchild;
+        }
+
+        // `assert(node == NULL);`
+        /* at here, current node must be NULL, 
+           then used GetTop to get the stack top to `node` and visit it */
+
+        GetTop(*nodeStack, &node);
+        Pop(nodeStack);
+        visit(node);
+
+        /* we have visited the node and its left subtree.  
+           Now, it's right subtree's turn, it's maybe NULL */
+        node = node->rchild;
+
+    } /* end of while */
+}
+
+void LevelOrderIterative(BiTNode *root, LinkQueue *nodeQueue, Visit visit)
+{
+
 }
 #endif
