@@ -8,10 +8,8 @@ typedef struct BiTNode {
 }BiTNode, *BiTree;
 
 BiTNode* CreateNewNode(TElemType value);
-BiTree CreateBiTree();
 void InitBiTree(BiTree &T);
 void DestroyBiTree(BiTree &T);
-void CreateBiTree(BiTree &T, int def);
 void ClearBiTree(BiTree &T);
 bool isBiTreeEmpty(BiTree T);
 int BiTreeDepth(BiTree T);

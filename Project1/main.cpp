@@ -54,7 +54,7 @@ void tests()
 int PrintElement(BiTNode* node)
 {
 	printf(" %d ", node->value);
-	return true;
+	return 0;
 }
 
 int release(BiTNode *node)
@@ -117,18 +117,6 @@ void test_tree1()
     root->lchild->lchild->lchild = CreateNewNode(7);
     root->lchild->lchild->rchild = CreateNewNode(9);
 
-	// use insert
-	//BiTree tree = NULL;
-	//tree = insert(tree, 'A');
-	//tree = insert(tree, 'B');
-	//tree = insert(tree, 'C');
-
-	//InOrderTraverse(tree, &PrintElement, NULL);
-	//mirrorOfBiTree(tree);
-	//printf("\n");
-	//InOrderTraverse(tree, &PrintElement, NULL);
-	//printf("\nmaxDepth = %u\n", maxBiTreeDepth(tree));
-    //printf("\n");
     PreOrderTraverse(root, &PrintElement, NULL);
     printf("\n");
     InOrderTraverse(root, &PrintElement, NULL);
@@ -164,6 +152,8 @@ void test_tree()
     InOrderIterative(root);
     printf("\n");
     PostOrderIterative(root);
+    printf("\n");
+    LevelOrderIterative(root);
     
     // should release node space use function PostOrderIterative
     // reference below
@@ -175,15 +165,42 @@ void test_tree()
     InOrderIterative(root, &nodeStack, &PrintElement);
     printf("\n");
     PostOrderIterative(root, &nodeStack, &PrintElement);
+
+    LinkQueue nodeQueue;
+    InitQueue(&nodeQueue);
+    LevelOrderIterative(root, &nodeQueue, &PrintElement);
     //release node
     PostOrderIterative(root, &nodeStack, &release);
     res = DestroyStack(&nodeStack);
+    res = DestroyQueue(&nodeQueue);
 #endif
+}
+
+void test_tree2()
+{
+    BiTNode *root = CreateNewNode(10);
+    root->lchild = CreateNewNode(8);
+    root->rchild = CreateNewNode(2);
+    root->lchild->lchild = CreateNewNode(3);
+    root->lchild->rchild = CreateNewNode(5);
+    root->rchild->lchild = CreateNewNode(4);
+    root->lchild->lchild->lchild = CreateNewNode(7);
+    root->lchild->lchild->rchild = CreateNewNode(9);
+    // use insert
+    //BiTree tree = NULL;
+    //tree = insert(tree, 'A');
+    //tree = insert(tree, 'B');
+    //tree = insert(tree, 'C');
+    //mirrorOfBiTree(tree);
+    //printf("\n");
+    //printf("\nmaxDepth = %u\n", maxBiTreeDepth(tree));
+    //printf("\n");
+    printf("%u\n", SizeOfBiTree(root));
 }
 
 int main()
 {
-    test_tree();
+    test_tree1();
 	getchar();
 	return 0;
 }

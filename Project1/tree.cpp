@@ -5,6 +5,9 @@
 #include "linkqueue.h"
 #pragma warning(disable:4996)
 
+static void visitGivenLevel(BiTree T, int level, Visit visit);
+static int height(BiTree T);
+
 BiTNode* CreateNewNode(TElemType value)
 {
     BiTNode* treePtr = (BiTNode*)malloc(sizeof(BiTNode));
@@ -16,26 +19,14 @@ BiTNode* CreateNewNode(TElemType value)
 	return treePtr;
 }
 
-
-BiTree CreateBiTree()
-{
-	TElemType elem;
-	BiTree T;
-	scanf("%c", &elem);
-	if (elem == '#') T = NULL;
-	else {
-		T = (BiTree)malloc(sizeof(BiTNode));
-		T->value = elem;
-		T->lchild = CreateBiTree();
-		T->rchild = CreateBiTree();
-	}
-	return T;
-}
-
-
 void InsertTreeChild(BiTree T, BiTNode *pNode, int LR, BiTree newTree)
 {
 
+}
+
+int BiTreeDepth(BiTree T)
+{
+    return height(T);
 }
 
 
@@ -87,12 +78,8 @@ bool PostOrderTraverse(BiTree T, Visit visit, void *pUserData)
 
 
 // ≤„–Ú
-void visitGivenLevel(BiTree T, int level, Visit visit);
-int height(BiTree T);
-
 bool LevelOrderTraverse(BiTree T, Visit visit, void *pUserData)
 {
-    // TODO: finish it, using linkqueue.h/linkqueue.cpp
     int h = height(T);
     int i;
     for (i = 1; i <= h; i++)
@@ -107,8 +94,7 @@ void visitGivenLevel(BiTree T, int level, Visit visit)
         return;
     if (level == 1)
         visit(T);
-    else if (level > 1)
-    {
+    else if (level > 1) {
         visitGivenLevel(T->lchild, level - 1, visit);
         visitGivenLevel(T->rchild, level - 1, visit);
     }
@@ -142,6 +128,7 @@ int height(BiTree T)
 #include <stdio.h> 
 #include <iostream> 
 #include <stack> 
+#include <queue>
 
 using namespace std;
 // An iterative process to print preorder traversal of Binary tree 
@@ -221,7 +208,16 @@ void InOrderIterative(BiTree root)
 
 void LevelOrderIterative(BiTree root)
 {
-
+    std::queue<BiTree> nodeQueue;
+    nodeQueue.push(root);
+    while (!nodeQueue.empty()) {
+        BiTNode *node = nodeQueue.front();
+        nodeQueue.pop();
+        
+        printf("%d ", node->value); // output, it's can use callback to improve
+        if (node->lchild) nodeQueue.push(node->lchild);
+        if (node->rchild) nodeQueue.push(node->rchild);
+    }
 }
 
 #else
@@ -294,6 +290,13 @@ void InOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
 
 void LevelOrderIterative(BiTNode *root, LinkQueue *nodeQueue, Visit visit)
 {
-
+    EnQueue(nodeQueue, root);
+    while (!isQueueEmpty(*nodeQueue)) {
+        BiTNode *node;
+        DeQueue(nodeQueue, &node);
+        visit(node);
+        if (node->lchild) EnQueue(nodeQueue, node->lchild);
+        if (node->rchild) EnQueue(nodeQueue, node->rchild);
+    }
 }
 #endif
