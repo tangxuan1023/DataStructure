@@ -176,6 +176,7 @@ void test_tree()
 #endif
 }
 
+
 void test_tree2()
 {
     BiTNode *root = CreateNewNode(10);
@@ -195,12 +196,13 @@ void test_tree2()
     //printf("\n");
     //printf("\nmaxDepth = %u\n", maxBiTreeDepth(tree));
     //printf("\n");
-    printf("%u\n", SizeOfBiTree(root));
+    //printf("%u\n", SizeOfBiTree(root));
+    MorrisInorder(root, &PrintElement);
 }
 
 int main()
 {
-    test_tree1();
+    test_tree2();
 	getchar();
 	return 0;
 }

@@ -277,7 +277,7 @@ void InOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
         /* at here, current node must be NULL, 
            then used GetTop to get the stack top to `node` and visit it */
 
-        GetTop(*nodeStack, &node);
+        GetTop(*nodeStack, &node);  // the top node without left child
         Pop(nodeStack);
         visit(node);
 
@@ -297,6 +297,33 @@ void LevelOrderIterative(BiTNode *root, LinkQueue *nodeQueue, Visit visit)
         visit(node);
         if (node->lchild) EnQueue(nodeQueue, node->lchild);
         if (node->rchild) EnQueue(nodeQueue, node->rchild);
+    }
+}
+
+// Inorder traverse without using recursive and no stack
+void MorrisInorder(BiTNode *root, Visit visit)
+{
+    BiTNode *p = root, *tmp;
+    while (p != NULL) {
+        if (p->lchild == NULL) {
+            visit(p);
+            p = p->rchild;
+        }
+        else {
+            tmp = p->lchild;
+            while (tmp->rchild != NULL && tmp->rchild != p) {
+                tmp = tmp->rchild;
+            }
+            if (tmp->rchild == NULL) {
+                tmp->rchild = p;
+                p = p->lchild;
+            }
+            else {
+                visit(p);
+                tmp->rchild = NULL;
+                p = p->rchild;
+            }
+        }
     }
 }
 #endif

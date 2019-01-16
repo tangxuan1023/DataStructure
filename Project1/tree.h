@@ -46,5 +46,6 @@ void PreOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
 void InOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
 void PostOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
 void LevelOrderIterative(BiTNode *root, LinkQueue *nodeQueue, Visit visit);
+void MorrisInorder(BiTNode *root, Visit visit);
 #endif
 #endif
