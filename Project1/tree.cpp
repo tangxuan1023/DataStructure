@@ -187,8 +187,48 @@ void PostOrderIterative(BiTree root)
     }
 }
 
+void PostOrderIterative2(BiTree root)
+{
+    // Check for empty tree 
+    if (root == NULL)
+        return;
+
+    BiTNode *p = root;
+    std::stack<BiTree> nodeStack;
+    do {
+        // Move to leftmost node 
+        while (p != NULL) {
+            // Push root's right child and then root to stack. 
+            if (p->rchild) nodeStack.push(p->rchild);
+            nodeStack.push(p);
+
+            // Set root as root's left child   
+            p = p->lchild;
+        } // after while, p == NULL
+
+        // Pop an item from stack and set it as root     
+        p = nodeStack.top();
+        nodeStack.pop();
+
+        // If the popped item has a right child and the right child is not 
+        // processed yet, then make sure right child is processed before root 
+        if (p->rchild && (!nodeStack.empty() && nodeStack.top() == p->rchild)) {
+            nodeStack.pop();  // remove right child from stack 
+            nodeStack.push(p);  // push root back to stack 
+            p = p->rchild; // change root so that the right  
+                           // child is processed next 
+        }
+        else { // Else print root's data and set root as NULL 
+            printf("%d ", p->value); // output, it's can use callback to improve
+            p = NULL;
+        }
+    } while (!nodeStack.empty());
+}
+
 void InOrderIterative(BiTree root)
 {
+    if (root == NULL)
+        return;
     std::stack<BiTree> nodeStack;
     BiTNode *curr = root;
 
@@ -206,8 +246,41 @@ void InOrderIterative(BiTree root)
     } /* end of while */
 }
 
+void InOrderIterative2(BiTree root)
+{
+    if (root == NULL)
+        return;
+    BiTNode *p = root;
+    std::stack<BiTree> nodeStack;
+    while (p != NULL) {
+        while (p != NULL) {
+            if (p->rchild) nodeStack.push(p->rchild);
+            nodeStack.push(p);
+            p = p->lchild;
+        }  // after while, p == NULL
+
+        p = nodeStack.top();
+        nodeStack.pop();
+        while (!nodeStack.empty() && p->rchild == NULL) {
+            printf("%d ", p->value);   // output, it's can use callback to improve
+            p = nodeStack.top();
+            nodeStack.pop();
+        }
+        printf("%d ", p->value);   // output, it's can use callback to improve
+
+        if (!nodeStack.empty()) {
+            p = nodeStack.top();
+            nodeStack.pop();
+        }
+        else
+            p = NULL;
+    }
+}
+
 void LevelOrderIterative(BiTree root)
 {
+    if (root == NULL)
+        return;
     std::queue<BiTree> nodeQueue;
     nodeQueue.push(root);
     while (!nodeQueue.empty()) {
@@ -224,6 +297,8 @@ void LevelOrderIterative(BiTree root)
 
 void PostOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
 {
+    if (root == NULL)
+        return;
     Push(nodeStack, root);
     SqStack tmpStack;
     int res = InitStack(&tmpStack);
@@ -247,8 +322,48 @@ void PostOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
     res = DestroyStack(&tmpStack);
 }
 
+void PostOrderIterative2(BiTNode *root, SqStack *nodeStack, Visit visit)
+{
+    // Check for empty tree 
+    if (root == NULL)
+        return;
+
+    BiTNode *p = root;
+    do {
+        // Move to leftmost node 
+        while (p != NULL) {
+            // Push root's right child and then root to stack. 
+            if (p->rchild) Push(nodeStack, p->rchild);
+            Push(nodeStack, p);
+
+            // Set root as root's left child   
+            p = p->lchild;
+        }
+
+        // Pop an item from stack and set it as root     
+        GetTop(*nodeStack, &p);
+        Pop(nodeStack);
+
+        // If the popped item has a right child and the right child is not 
+        // processed yet, then make sure right child is processed before root 
+        BiTNode *tmp = NULL;
+        if (GetTop(*nodeStack, &tmp), p->rchild && tmp == p->rchild){
+            Pop(nodeStack);  // remove right child from stack 
+            Push(nodeStack, p);  // push root back to stack 
+            p = p->rchild; // change root so that the right  
+                                // child is processed next 
+        }
+        else { // Else print root's data and set root as NULL 
+            visit(p);  // output, it's can use callback to improve
+            p = NULL;
+        }
+    } while (!isStackEmpty(*nodeStack));
+}
+
 void PreOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
 {
+    if (root == NULL)
+        return;
     Push(nodeStack, root);
     while (/*printf("%p %p\n", nodeStack->top, nodeStack->base) && */!isStackEmpty(*nodeStack)) {
         /* Note that right child is pushed first so that left is processed first */
@@ -263,6 +378,8 @@ void PreOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
 
 void InOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
 {
+    if (root == NULL)
+        return;
     BiTNode *node = root;
     while (node != NULL || !isStackEmpty(*nodeStack)){
         /* Reach the left most Node of the curr Node */
@@ -288,8 +405,40 @@ void InOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit)
     } /* end of while */
 }
 
+void InOrderIterative2(BiTNode *root, SqStack *nodeStack, Visit visit)
+{
+    if (root == NULL)
+        return;
+    BiTNode *p = root;
+    while (p != NULL) {
+        while (p != NULL) {
+            if (p->rchild) Push(nodeStack, p->rchild);
+            Push(nodeStack, p);
+            p = p->lchild;
+        }  // after while, p == NULL
+
+        GetTop(*nodeStack, &p);
+        Pop(nodeStack);
+        while (!isStackEmpty(*nodeStack) && p->rchild == NULL) {
+            visit(p);
+            GetTop(*nodeStack, &p);
+            Pop(nodeStack);
+        }
+        visit(p);
+
+        if (!isStackEmpty(*nodeStack)) {
+            GetTop(*nodeStack, &p);
+            Pop(nodeStack);
+        }
+        else 
+            p = NULL;
+    }
+}
+
 void LevelOrderIterative(BiTNode *root, LinkQueue *nodeQueue, Visit visit)
 {
+    if (root == NULL)
+        return;
     EnQueue(nodeQueue, root);
     while (!isQueueEmpty(*nodeQueue)) {
         BiTNode *node;

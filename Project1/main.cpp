@@ -151,7 +151,11 @@ void test_tree()
     printf("\n");
     InOrderIterative(root);
     printf("\n");
+    InOrderIterative2(root);
+    printf("\n");
     PostOrderIterative(root);
+    printf("\n");
+    PostOrderIterative2(root);
     printf("\n");
     LevelOrderIterative(root);
     
@@ -164,10 +168,15 @@ void test_tree()
     printf("\n");
     InOrderIterative(root, &nodeStack, &PrintElement);
     printf("\n");
+    InOrderIterative2(root, &nodeStack, &PrintElement);
+    printf("\n");
     PostOrderIterative(root, &nodeStack, &PrintElement);
+    printf("\n");
+    PostOrderIterative2(root, &nodeStack, &PrintElement);
 
     LinkQueue nodeQueue;
     InitQueue(&nodeQueue);
+    printf("\n");
     LevelOrderIterative(root, &nodeQueue, &PrintElement);
     //release node
     PostOrderIterative(root, &nodeStack, &release);
@@ -197,12 +206,14 @@ void test_tree2()
     //printf("\nmaxDepth = %u\n", maxBiTreeDepth(tree));
     //printf("\n");
     //printf("%u\n", SizeOfBiTree(root));
+#if USE_MY_STACK
     MorrisInorder(root, &PrintElement);
+#endif
 }
 
 int main()
 {
-    test_tree2();
+    test_tree();
 	getchar();
 	return 0;
 }

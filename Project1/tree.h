@@ -31,20 +31,24 @@ bool InOrderTraverse(BiTree T, Visit visit, void *pUserData);
 bool PostOrderTraverse(BiTree T, Visit visit, void *pUserData);
 bool LevelOrderTraverse(BiTree T, Visit visit, void *pUserData);
 
-#define USE_MY_STACK 1
-#define USE_MY_QUEUE 1
+#define USE_MY_STACK 0
+#define USE_MY_QUEUE 0
 
 #if !USE_MY_STACK
 void PreOrderIterative(BiTree root);
 void InOrderIterative(BiTree root);
+void InOrderIterative2(BiTree root);
 void PostOrderIterative(BiTree root);
+void PostOrderIterative2(BiTree root);
 void LevelOrderIterative(BiTree root);
 #else
 struct SqStack;
 struct LinkQueue;
 void PreOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
 void InOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
+void InOrderIterative2(BiTNode *root, SqStack *nodeStack, Visit visit);
 void PostOrderIterative(BiTNode *root, SqStack *nodeStack, Visit visit);
+void PostOrderIterative2(BiTNode *root, SqStack *nodeStack, Visit visit);
 void LevelOrderIterative(BiTNode *root, LinkQueue *nodeQueue, Visit visit);
 void MorrisInorder(BiTNode *root, Visit visit);
 #endif
